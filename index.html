@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Judo Technieken</title>
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--tx:#1b1b1b;--mut:#6b6b6b;--ac:#c1272d;--ac2:#1f4e9c;--bd:#e3e1dc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121212;--card:#1e1e1e;--tx:#f0f0f0;--mut:#9a9a9a;--ac:#ef5a5f;--ac2:#6d9bec;--bd:#333}}
+:root[data-theme="dark"]{--bg:#121212;--card:#1e1e1e;--tx:#f0f0f0;--mut:#9a9a9a;--ac:#ef5a5f;--ac2:#6d9bec;--bd:#333}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:12px 14px 8px;z-index:5;border-bottom:1px solid var(--bd)}
+h1{font-size:20px;margin:0 0 8px}
+input{width:100%;padding:11px 12px;font-size:16px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 2px}
+.tabs button{flex:none;padding:7px 12px;border-radius:999px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-size:14px}
+.tabs button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+main{padding:10px 14px 30px;max-width:640px;margin:auto}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);margin:18px 0 6px}
+.t{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;padding:14px;margin-bottom:6px;background:var(--card);border:1px solid var(--bd);border-radius:12px;color:var(--tx);font-size:16px}
+.t small{color:var(--mut);display:block;font-size:12px;margin-top:2px}
+.t span{color:var(--mut)}
+#sheet{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;z-index:20}
+#sheet.show{display:flex}
+.box{background:var(--card);width:100%;border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-width:640px;margin:auto}
+.box h3{margin:0}
+.box p{margin:2px 0 14px;color:var(--mut);font-size:14px}
+.box a{display:block;text-align:center;padding:14px;border-radius:12px;color:#fff;text-decoration:none;font-weight:600;margin-bottom:8px}
+.k{background:var(--ac)}.i{background:var(--ac2)}
+.x{background:none!important;color:var(--mut)!important;font-weight:400!important}
+.none{color:var(--mut);text-align:center;margin-top:30px}
+</style>
+</head>
+<body>
+<header>
+<h1>🥋 Judo Technieken</h1>
+<input id="q" type="search" placeholder="Zoek een techniek…" autocomplete="off">
+<div class="tabs" id="tabs"></div>
+</header>
+<main id="list"></main>
+<div id="sheet"><div class="box">
+<h3 id="sn"></h3><p id="ss"></p>
+<a id="ka" class="k" target="_blank" rel="noopener">▶ Kodokan video’s</a>
+<a id="ia" class="i" target="_blank" rel="noopener">▶ IJF Academy video’s</a>
+<a class="x" id="cl">Sluiten</a>
+</div></div>
+<script>
+var D=[
+["Dai Ikkyo (1e reeks)","Nage-waza",[["De-ashi-harai","Voorwaartse voetveeg"],["Hiza-guruma","Kniewiel"],["Sasae-tsurikomi-ashi","Steunende voetworp"],["Uki-goshi","Zwevende heupworp"],["Osoto-gari","Grote buitenwaartse maai"],["O-goshi","Grote heupworp"],["Ouchi-gari","Grote binnenwaartse maai"],["Seoi-nage","Schouderworp"]]],
+["Dai Nikyo (2e reeks)","Nage-waza",[["Kosoto-gari","Kleine buitenwaartse maai"],["Kouchi-gari","Kleine binnenwaartse maai"],["Koshi-guruma","Heupwiel"],["Tsurikomi-goshi","Optil-heupworp"],["Okuri-ashi-harai","Zijwaartse voetveeg"],["Tai-otoshi","Lichaamsval"],["Harai-goshi","Veegheupworp"],["Uchi-mata","Binnendijworp"]]],
+["Dai Sankyo (3e reeks)","Nage-waza",[["Kosoto-gake","Kleine buitenwaartse haak"],["Tsuri-goshi","Optil-heupworp (hoog)"],["Yoko-otoshi","Zijwaartse val"],["Ashi-guruma","Beenwiel"],["Hane-goshi","Springheupworp"],["Harai-tsurikomi-ashi","Veegende voetworp"],["Tomoe-nage","Cirkelworp"],["Kata-guruma","Schouderwiel"]]],
+["Dai Yonkyo (4e reeks)","Nage-waza",[["Sumi-gaeshi","Hoekomkering"],["Tani-otoshi","Dalval"],["Hane-makikomi","Springende meeslepende worp"],["Sukui-nage","Scheppende worp"],["Utsuri-goshi","Wisselheupworp"],["O-guruma","Groot wiel"],["Soto-makikomi","Buitenwaartse meeslepende worp"],["Uki-otoshi","Zwevende val"]]],
+["Dai Gokyo (5e reeks)","Nage-waza",[["Osoto-guruma","Groot buitenwiel"],["Uki-waza","Zwevende techniek"],["Yoko-wakare","Zijwaartse scheiding"],["Yoko-guruma","Zijwiel"],["Ushiro-goshi","Achterwaartse heupworp"],["Ura-nage","Achterwaartse worp"],["Sumi-otoshi","Hoekval"],["Yoko-gake","Zijwaartse haak"]]],
+["Osaekomi-waza (houdgrepen)","Ne-waza",[["Kesa-gatame","Sjerpgreep"],["Kata-gatame","Schoudergreep"],["Kami-shiho-gatame","Bovenste vierhoekgreep"],["Yoko-shiho-gatame","Zijwaartse vierhoekgreep"],["Kuzure-kesa-gatame","Gewijzigde sjerpgreep"],["Tate-shiho-gatame","Verticale vierhoekgreep"]]],
+["Shime-waza (wurgtechnieken)","Ne-waza",[["Hadaka-jime","Naakte wurging"],["Okuri-eri-jime","Schuivende kraagwurging"],["Kata-ha-jime","Eenzijdige vleugelwurging"],["Sankaku-jime","Driehoekswurging"]]],
+["Kansetsu-waza (armklemmen)","Ne-waza",[["Ude-garami","Armverstrikking"],["Juji-gatame","Kruisklem"],["Ude-gatame","Armklem"],["Waki-gatame","Oksel-armklem"]]]
+];
+var groups=["Alles","Dai 1–5","Ne-waza"],cur=0,list=document.getElementById("list"),q=document.getElementById("q"),tabs=document.getElementById("tabs");
+groups.forEach(function(g,i){var b=document.createElement("button");b.textContent=g;if(!i)b.className="on";b.onclick=function(){cur=i;[].forEach.call(tabs.children,function(c,j){c.className=j===i?"on":""});render()};tabs.appendChild(b)});
+function render(){
+list.innerHTML="";var f=q.value.trim().toLowerCase(),n=0;
+D.forEach(function(g){
+if(cur===1&&g[1]!=="Nage-waza")return;if(cur===2&&g[1]!=="Ne-waza")return;
+var items=g[2].filter(function(t){return !f||(t[0]+" "+t[1]).toLowerCase().indexOf(f)>-1});
+if(!items.length)return;
+var h=document.createElement("h2");h.textContent=g[0];list.appendChild(h);
+items.forEach(function(t){n++;var b=document.createElement("button");b.className="t";
+b.innerHTML="<div>"+t[0]+"<small>"+t[1]+"</small></div><span>›</span>";
+b.onclick=function(){open_(t)};list.appendChild(b)});
+});
+if(!n){var p=document.createElement("p");p.className="none";p.textContent="Geen techniek gevonden.";list.appendChild(p)}
+}
+function yt(s){return "https://www.youtube.com/results?search_query="+encodeURIComponent(s)}
+function open_(t){
+document.getElementById("sn").textContent=t[0];
+document.getElementById("ss").textContent=t[1];
+document.getElementById("ka").href=yt("Kodokan Judo "+t[0]);
+document.getElementById("ia").href=yt("IJF Academy "+t[0]);
+document.getElementById("sheet").className="show"}
+document.getElementById("cl").onclick=function(){document.getElementById("sheet").className=""};
+document.getElementById("sheet").onclick=function(e){if(e.target===this)this.className=""};
+q.oninput=render;render();
+</script>
+</body>
+</html>
